@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Museum</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+    }
+    .artifact {
+      background: white;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Virtual Museum of Salem Witch Trials</h1>
+  <div id="museum"></div>
+
+  <script>
+    const apiURL = "https://api.sheetbest.com/sheets/a279983b-7be9-48ef-a9c2-f9ff4d8ecf26"; 
+
+    fetch(apiURL)
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('museum');
+        data.forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'artifact';
+          div.innerHTML = `
+            <h3>${item.Name.trim()}</h3>
+            <p><strong>Town:</strong> ${item.Town.trim()}</p>
+            <p><strong>Date:</strong> ${item.Date.trim()}</p>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(err => {
+        console.error('Failed to fetch data:', err);
+      });
+  </script>
+</body>
+</html>
